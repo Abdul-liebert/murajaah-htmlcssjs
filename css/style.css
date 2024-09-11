@@ -47,6 +47,9 @@ p{
     border-radius: 8px;
 }
 
+h2{
+    font-size: 18px;
+}
 .container{
     display: grid;
     gap: 16px;

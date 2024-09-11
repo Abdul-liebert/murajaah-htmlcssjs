@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Jadwal Sholat</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <!-- header -->
     <div class="header">
         <h1>Aplikasi Jadwal Sholat</h1>
         <span>
-            <p>Lokasi</p>
-            <p>Daerah</p>
+            <p id="lokasi">Lokasi</p>
+            <p id="daerah">Daerah</p>
         </span>
     </div>
     <!-- end header -->
 
     <!-- content date -->
-     <div class="content">
-        <h2>Tanggal</h2>
-     </div>
+    <div class="content">
+        <h2 id="tanggal">Tanggal</h2>
+    </div>
     <!-- end content date -->
     <div class="container">
         <div class="item">
-            <p>Subuh</p>
-            <p>waktu</p>
+            <p >Subuh</p>
+            <p id="subuh"> waktu</p>
         </div>
         <div class="item">
             <p>Imsak</p>
-            <p>waktu</p>
+            <p id="imsak">waktu</p>
         </div>
         <div class="item">
             <p>Dzuhur</p>
-            <p>waktu</p>
+            <p id="dzuhur">waktu</p>
         </div>
         <div class="item">
             <p>Ashar</p>
-            <p>waktu</p>
+            <p id="ashar">waktu</p>
         </div>
         <div class="item">
             <p>Maghrib</p>
-            <p>waktu</p>
+            <p  id="maghrib">waktu</p>
+
         </div>
         <div class="item">
             <p>Maghrib</p>
-            <p>waktu</p>
+            <p   id="isya">waktu</p>
+
         </div>
     </div>
 </body>
@@ -53,19 +57,41 @@
 <script>
     async function getData() {
         const url = "https://api.myquran.com/v2/sholat/jadwal/1204/2024-09-11"
-        try{
-            const response = await fetch (url);
-            if(!response.ok){
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
                 throw new Error(`Response status: {$response.status}`)
             }
 
             const json = await response.json();
-            const data = JSON.stringify(json);
-            console.log(data);
+            const jadwal = json.data.jadwal; 
+            const daerah = json.data.daerah; 
+            const lokasi = json.data.lokasi; 
+
+        const jadwalElements = {
+            subuh: 'subuh',
+            imsak: 'imsak',
+            dzuhur: 'dzuhur',
+            ashar: 'ashar',
+            maghrib: 'maghrib',
+            isya: 'isya'
+        };
+
+        for (const [key, value] of Object.entries(jadwalElements)) {
+            if (jadwal[key]) {
+                document.getElementById(value).textContent = jadwal[key];
+            }
+        }
+
+        document.getElementById('lokasi').textContent = lokasi
+        document.getElementById('daerah').textContent = daerah
+        document.getElementById('tanggal').textContent = `Tanggal: ${jadwal.tanggal}`
+
         } catch (error) {
             console.error(error.message);
         }
     }
     getData()
 </script>
+
 </html>
