@@ -49,4 +49,23 @@
         </div>
     </div>
 </body>
+
+<script>
+    async function getData() {
+        const url = "https://api.myquran.com/v2/sholat/jadwal/1204/2024-09-11"
+        try{
+            const response = await fetch (url);
+            if(!response.ok){
+                throw new Error(`Response status: {$response.status}`)
+            }
+
+            const json = await response.json();
+            const data = JSON.stringify(json);
+            console.log(data);
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+    getData()
+</script>
 </html>
